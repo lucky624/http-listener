@@ -12,18 +12,22 @@ def listener():
     data = request.get_data()
     files = request.files
 
-    if data:
-        handle = open(os.path.join(app.config['UPLOAD_FOLDER']) + '/' + "output_" + uuid.uuid4().hex, 'wb')
-        handle.write(data)
-        handle.close()
+    check_file = False
 
     try:
         for file in files:
+            check_file = True
             file = request.files[file]
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], "file_" + uuid.uuid4().hex + '_' + filename))
     except:
         pass
+
+    if data and check_file == False:
+        handle = open(os.path.join(app.config['UPLOAD_FOLDER']) + '/' + "output_" + uuid.uuid4().hex, 'wb')
+        handle.write(data)
+        handle.close()
+
 
     return "lucky624"
 

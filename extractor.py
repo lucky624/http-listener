@@ -3,8 +3,10 @@
 import os, re
 from storage import storage_set, storage_get
 
-REDIS_STORAGE = 1 # 1 - on
+REDIS_STORAGE = 0 # 1 - on
                   # 0 - off
+
+FLAG_REGEXP  = '[A-Z0-9]{31}=' 
 
 pwd_files = []
 
@@ -19,7 +21,7 @@ if REDIS_STORAGE == 1:
             for line in f.readlines():
                 try:
                     decode_line = line.decode()
-                    flags = re.findall("[A-Z0-9]{31}=", decode_line)
+                    flags = re.findall(FLAG_REGEXP, decode_line)
                     if flags:
                         for flag in flags:
                             print(flag, flush=True)
@@ -33,7 +35,7 @@ else:
         for line in f.readlines():
             try:
                 decode_line = line.decode()
-                flags = re.findall("[A-Z0-9]{31}=", decode_line)
+                flags = re.findall(FLAG_REGEXP, decode_line)
                 if flags:
                     for flag in flags:
                         print(flag, flush=True)
