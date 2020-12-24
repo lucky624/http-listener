@@ -3,10 +3,10 @@
 import os, re
 from storage import storage_set, storage_get
 
-REDIS_STORAGE = 0 # 1 - on
+REDIS_STORAGE = 1 # 1 - on
                   # 0 - off
 
-FLAG_REGEXP  = '[A-Z0-9]{31}=' 
+FLAG_REGEXP  = '^\w{31}=$'
 
 pwd_files = []
 
